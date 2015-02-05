@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+{% block head %}
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome{% endblock %}</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='Bootstrap/css/bootstrap.min.css') }}" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='Bootstrap/css/bootstrap-superhero-theme.css') }}" />
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/main.css') }}" />
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-2.1.3.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='Bootstrap/js/bootstrap.min.js') }}" ></script>
+{% endblock %}
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">Flask Test</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+          <div class="navbar-collapse collapse" id="navbar-main">
+              <ul class="nav navbar-nav navbar-right">
+            {% if current_user.is_authenticated() %}
+                <li><a>Hi {{ current_user.username }}!</a></li>
+                <li><a href="{{ url_for('Login.logout_page') }}">Logout</a></li>
+            {% else %}
+                <li><a href="{{ url_for('Login.login_page') }}">Login</a></li>
+            {% endif %}
+          </ul>
+              </div>
+      </div>
+    </div>
+    <div class="container">
+    <h1>Main layout H1 title</h1>
+        {% for message in get_flashed_messages() %}
+            <p class=message>{{ message }}</p>
+        {% endfor %}
+
+        {% block body %}{% endblock %}
+    </div>
+</body>
+</html>
