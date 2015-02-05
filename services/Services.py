@@ -1,6 +1,6 @@
 from sqlalchemy.orm import sessionmaker
-from flaskTest import AppConfig
-from flaskTest.dbmodels.Models import User, Post
+import AppConfig
+from dbmodels.Models import User, Post
 
 
 class BaseService():

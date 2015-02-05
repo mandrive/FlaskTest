@@ -1,6 +1,6 @@
 from flask_wtf import Form
 from wtforms import StringField, PasswordField, BooleanField, validators
-from flaskTest.services.Services import UserService
+from services.Services import UserService
 
 
 class LoginModel(Form):

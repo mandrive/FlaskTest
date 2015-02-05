@@ -2,8 +2,8 @@ from flask import Blueprint, render_template
 from flask_login import login_user, logout_user
 from werkzeug.utils import redirect
 
-from flaskTest.models.LoginModel import LoginModel
-from flaskTest.services.Services import UserService
+from models.LoginModel import LoginModel
+from services.Services import UserService
 
 
 mod = Blueprint('Login', __name__)

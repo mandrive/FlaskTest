@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from flaskTest.services.Services import PostService
+from services.Services import PostService
 
 mod = Blueprint('Post', __name__)
 

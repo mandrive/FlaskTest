@@ -3,9 +3,9 @@ from flask_login import LoginManager
 from flask_wtf.csrf import CsrfProtect
 from sqlalchemy import create_engine
 
-from flaskTest import AppConfig
-from flaskTest.services.Services import UserService
-from flaskTest.views import Login, Common, Post
+import AppConfig
+from services.Services import UserService
+from views import Login, Common, Post
 
 
 app = Flask(__name__)
