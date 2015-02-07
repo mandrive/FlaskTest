@@ -1,6 +1,7 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
 from itsdangerous import URLSafeTimedSerializer
+from enum import Enum
 
 import AppConfig
 
@@ -8,6 +9,11 @@ import AppConfig
 Base = declarative_base()
 
 login_serializer = URLSafeTimedSerializer(AppConfig.APPSECRETKEY)
+
+
+class UserPrivileges(Enum):
+    USER = 1
+    ADMIN = 2
 
 
 class Post(Base):
@@ -26,12 +32,16 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String)
     password = Column(String)
+    type = Column(Integer)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     def __repr__(self):
         return "<User(username='%s', password='%s')>" % (self.username, self.password)
+
+    def is_admin(self):
+        return UserPrivileges(self.type) == UserPrivileges.ADMIN
 
     def is_authenticated(self):
         return True

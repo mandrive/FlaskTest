@@ -10,7 +10,7 @@ from sqlalchemy import create_engine
 import AppConfig
 from RestResources.Resources import PostsList, Posts
 from services.Services import UserService
-from views import Login, Common, Post
+from views import Login, Common, Post, Admin
 
 
 app = Flask(__name__)
@@ -33,6 +33,7 @@ def register_mods():
     app.register_blueprint(Common.mod)
     app.register_blueprint(Login.mod)
     app.register_blueprint(Post.mod)
+    app.register_blueprint(Admin.mod)
 
 
 def create_db_engine():

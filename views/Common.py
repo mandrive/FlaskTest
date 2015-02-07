@@ -8,3 +8,8 @@ mod = Blueprint('Common', __name__)
 @login_required
 def index_path():
     return render_template('index.html')
+
+
+@mod.route('/unauthorized')
+def unauthorized_path():
+    return render_template('unauthorized.html')

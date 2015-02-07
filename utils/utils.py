@@ -1,5 +1,5 @@
 from functools import wraps
-import logging
+
 from flask import url_for, request, render_template
 from flask_login import current_user
 from werkzeug.utils import redirect
@@ -11,6 +11,16 @@ def login_required(f):
         if current_user is None or current_user.is_authenticated() is False:
             return redirect(url_for('Login.login_page', next=request.url))
         return f(*args, **kwargs)
+
+    return decorated_function
+
+
+def admin_only(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin():
+            return f(*args, **kwargs)
+        return redirect(url_for('Common.unauthorized_path'))
 
     return decorated_function
 

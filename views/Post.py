@@ -1,6 +1,8 @@
-from flask import Blueprint, render_template
+from flask import Blueprint
+
 from services.Services import PostService
 from utils.utils import templated, login_required
+
 
 mod = Blueprint('Post', __name__)
 
