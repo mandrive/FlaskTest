@@ -1,0 +1,7 @@
+flask
+flask-login
+flask-restful
+flask-wtf
+WTForms
+pymysql
+sqlalchemy
