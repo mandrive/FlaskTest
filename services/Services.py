@@ -43,6 +43,4 @@ class UserService(BaseService):
 
     def validate(self, username, password):
         user = self.getAll().filter_by(username=username, password=password).first()
-        if user is not None:
-            return True
-        return False
+        return user is not None

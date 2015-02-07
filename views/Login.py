@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template
-from flask_login import login_user, logout_user
+from flask import Blueprint, render_template, request
+from flask_login import login_user, logout_user, login_required
 from werkzeug.utils import redirect
 
 from models.LoginModel import LoginModel
@@ -16,6 +16,9 @@ def login_page():
         if loginmodel.validateCredentials():
             user = UserService().getUserByUsername(loginmodel.Username.data)
             login_user(user)
+            nextUrl = request.args.get('next', '')
+            if nextUrl is not None:
+                return redirect(nextUrl)
             return redirect('/')
         loginmodel.Username.errors.append('User does not exist in database!')
     return render_template('Login/login.html', form=loginmodel)
