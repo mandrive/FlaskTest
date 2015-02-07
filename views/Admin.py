@@ -9,5 +9,5 @@ mod = Blueprint('Admin', __name__)
 @templated('Admin/index.html')
 @login_required
 @admin_only
-def admin_index_path():
+def admin():
     pass

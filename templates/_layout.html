@@ -24,9 +24,9 @@
               <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated() %}
                 <li><a>Hi {{ current_user.username }}!</a></li>
-                <li><a href="{{ url_for('Login.logout_page') }}">Logout</a></li>
+                <li><a href="{{ url_for('Login.logout') }}">Logout</a></li>
             {% else %}
-                <li><a href="{{ url_for('Login.login_page') }}">Login</a></li>
+                <li><a href="{{ url_for('Login.login') }}">Login</a></li>
             {% endif %}
           </ul>
               </div>

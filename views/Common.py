@@ -6,10 +6,10 @@ mod = Blueprint('Common', __name__)
 
 @mod.route('/')
 @login_required
-def index_path():
+def index():
     return render_template('index.html')
 
 
 @mod.route('/unauthorized')
-def unauthorized_path():
+def unauthorized():
     return render_template('unauthorized.html')

@@ -10,6 +10,6 @@ mod = Blueprint('Post', __name__)
 @mod.route('/posts')
 @templated('Post/posts.html')
 @login_required
-def posts_path():
+def posts():
     posts = PostService().getAll()
     return dict(posts=posts)

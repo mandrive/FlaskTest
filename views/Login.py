@@ -10,7 +10,7 @@ mod = Blueprint('Login', __name__)
 
 
 @mod.route('/login', methods=['GET', 'POST'])
-def login_page():
+def login():
     loginmodel = LoginModel()
     if loginmodel.validate_on_submit():
         if loginmodel.validateCredentials():
@@ -25,6 +25,6 @@ def login_page():
 
 
 @mod.route('/logout')
-def logout_page():
+def logout():
     logout_user()
     return redirect('/')
