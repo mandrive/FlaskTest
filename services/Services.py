@@ -1,3 +1,5 @@
+from itsdangerous import Serializer, BadSignature
+from itsdangerous import SignatureExpired
 from sqlalchemy.orm import sessionmaker
 import AppConfig
 from dbmodels.Models import User, Post
@@ -36,6 +38,10 @@ class UserService(BaseService):
 
     def getUserByUsername(self, username):
         user = self.get_session().query(User).filter_by(username=username).first()
+        return user
+
+    def getById(self, id):
+        user = self.get_session().query(User).filter_by(id=id).first()
         return user
 
     def getAll(self):

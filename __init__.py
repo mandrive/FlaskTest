@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask_login import LoginManager
 from flask_restful import Api
 from flask_wtf.csrf import CsrfProtect
+from itsdangerous import URLSafeTimedSerializer
 from sqlalchemy import create_engine
 
 import AppConfig
@@ -15,6 +16,8 @@ from views import Login, Common, Post
 app = Flask(__name__)
 
 CsrfProtect(app)
+
+login_serializer = URLSafeTimedSerializer(AppConfig.APPSECRETKEY)
 
 
 @app.errorhandler(404)
@@ -51,8 +54,21 @@ def init_login():
         return UserService().getAll().filter_by(id=user_id).first()
 
     @login_manager.token_loader
-    def get_user_token(user_id):
-        return UserService().getAll().filter_by(id=user_id).first().get
+    def get_user_token(token):
+        max_age = app.config["REMEMBER_COOKIE_DURATION"].total_seconds()
+
+        #Decrypt the Security Token, data = [username, hashpass]
+        data = login_serializer.loads(token, max_age=max_age)
+
+        userService = UserService()
+
+        #Find the User
+        user = userService.getById(data[0])
+
+        #Check Password and return user or None
+        if user and userService.validate(user.username, user.password):
+            return user
+        return None
 
 
 def init_logger():
@@ -70,11 +86,16 @@ def register_rest_resources():
     api.add_resource(Posts, '/api/posts/<string:post_id>')
 
 
+def set_app_configuration():
+    app.config['REMEMBER_COOKIE_DURATION'] = AppConfig.REMEMBER_COOKIE_DURATION
+
+
 register_mods()
 api = register_rest_api()
 register_rest_resources()
 build_db_engine()
 init_login()
 init_logger()
+set_app_configuration()
 
 app.run(AppConfig.APPHOST, AppConfig.APPPORT)

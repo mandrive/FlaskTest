@@ -15,7 +15,7 @@ def login_page():
     if loginmodel.validate_on_submit():
         if loginmodel.validateCredentials():
             user = UserService().getUserByUsername(loginmodel.Username.data)
-            login_user(user)
+            login_user(user, remember=loginmodel.RememberMe.data)
             nextUrl = request.args.get('next', '')
             if nextUrl is not None:
                 return redirect(nextUrl)

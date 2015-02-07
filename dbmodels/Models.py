@@ -1,8 +1,13 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime
-import hashlib
+from itsdangerous import URLSafeTimedSerializer
+
+import AppConfig
+
 
 Base = declarative_base()
+
+login_serializer = URLSafeTimedSerializer(AppConfig.APPSECRETKEY)
 
 
 class Post(Base):
@@ -41,7 +46,5 @@ class User(Base):
         return self.id
 
     def get_auth_token(self):
-        hash = hashlib.sha512()
-        hash.update(self.username + self.password)
-        sha512hash = hash.digest()
-        return sha512hash
+        data = [str(self.id), self.password]
+        return login_serializer.dumps(data)
